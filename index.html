@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>M Harun Ar Royyan - Portfolio & CV</title>
+  
+  <!-- Favicon URL (Shield Icon) -->
+  <link rel="icon" href="https://i.ibb.co.com/0jhhQ9Zs/logo.jpg">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#10b981',
+            secondary: '#0284c7',
+            darkbg: '#0f172a',
+            cardbg: '#1e293b',
+            borderbg: '#334155',
+            lightbg: '#f8fafc',
+            lightcard: '#ffffff',
+            lightborder: '#e2e8f0'
+          },
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+            heading: ['Maven Pro', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <style>
+    body {
+      transition: background-color 0.3s ease, color 0.3s ease;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    input, textarea {
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+      user-select: text;
+    }
+    
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .scroll-reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #10b981; }
+
+    .fancy-border {
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .dark .fancy-border:hover {
+      border-color: rgba(16, 185, 129, 0.5);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+    html:not(.dark) .fancy-border:hover {
+      border-color: rgba(16, 185, 129, 0.5);
+      box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.2);
+    }
+
+    .tilt-card {
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease-out;
+    }
+    .tilt-inner {
+      transform: translateZ(30px);
+    }
+
+    @media (hover: none) and (pointer: coarse) {
+      .tilt-card, .btn-anim {
+        transition: transform 0.1s ease-out;
+      }
+      .tilt-card:active, .btn-anim:active {
+        transform: scale(0.96);
+      }
+    }
+
+    .nav-container {
+      position: relative;
+      background: rgba(241, 245, 249, 0.8);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      border-radius: 9999px;
+      padding: 6px;
+    }
+    .dark .nav-container {
+      background: rgba(30, 41, 59, 0.8);
+      border-color: rgba(51, 65, 85, 0.8);
+    }
+    .nav-bubble {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      height: calc(100% - 12px);
+      width: 0;
+      background: white;
+      border-radius: 9999px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity: 0;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      z-index: 0;
+    }
+    .dark .nav-bubble {
+      background: #334155;
+    }
+    .nav-link {
+      position: relative;
+      z-index: 10;
+      padding: 8px 16px;
+      transition: color 0.3s ease;
+    }
+
+    #mobile-backdrop {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    #mobile-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #mobile-sidebar {
+      transform: translateX(100%);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #mobile-sidebar.active {
+      transform: translateX(0);
+    }
+    .mobile-link {
+      transform: translateX(50px);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #mobile-sidebar.active .mobile-link {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .skill-bar {
+      width: 0%;
+      transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .skill-bar::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background-image: linear-gradient(45deg, rgba(255,255,255,0.2) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.2) 75%, transparent 75%, transparent);
+      background-size: 1rem 1rem;
+      animation: skill-stripes 1s linear infinite;
+    }
+    @keyframes skill-stripes {
+      0% { background-position: 0 0; }
+      100% { background-position: 1rem 0; }
+    }
+
+    .hero-title { font-size: clamp(2.5rem, 8vw, 4.5rem); }
+    .section-title { font-size: clamp(1.75rem, 5vw, 2.5rem); }
+
+    /* Modal Animations (Smooth Mobile Slide-Up + Scale) */
+    .modal-overlay {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-content {
+      transform: scale(0.9) translateY(30px);
+      opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+    }
+    .modal-overlay.active .modal-content {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+
+    .timeline-line {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 2px;
+      height: 0;
+      background: linear-gradient(to bottom, #10b981, #0284c7);
+      transition: height 0.1s linear;
+      z-index: 1;
+    }
+
+    /* Fix Floating Socials Desktop */
+    .social-desktop-btn {
+      display: flex;
+      align-items: center;
+      height: 2.5rem; /* 40px */
+      width: 2.5rem;
+      border-radius: 9999px;
+      overflow: hidden;
+      transition: width 0.3s ease, background-color 0.3s ease;
+    }
+    .social-desktop-btn:hover {
+      width: 8rem; /* 128px */
+    }
+    .social-desktop-btn .icon-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      flex-shrink: 0;
+    }
+    .social-desktop-btn .text-wrap {
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      padding-right: 1rem;
+    }
+    .social-desktop-btn:hover .text-wrap {
+      opacity: 1;
+      transition-delay: 0.1s;
+    }
+
+    .timeline-item:hover .timeline-dot {
+      transform: scale(1.5);
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+    }
+  </style>
+</head>
+<body class="bg-lightbg dark:bg-darkbg text-slate-800 dark:text-slate-200 font-sans antialiased overflow-x-hidden custom-scrollbar">
+
+  <!-- Floating Socials Desktop -->
+  <div class="hidden md:flex fixed left-6 top-1/2 -translate-y-1/2 z-40 flex-col items-start gap-3 p-2 rounded-3xl bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border border-lightborder dark:border-slate-700 shadow-lg">
+    <a href="https://github.com/yanzyuyu" target="_blank" class="social-desktop-btn bg-slate-100 dark:bg-slate-900 hover:bg-primary text-slate-600 dark:text-slate-300 hover:text-white">
+      <span class="icon-wrap"><i class="fa-brands fa-github text-xl"></i></span>
+      <span class="text-wrap text-sm font-bold">GitHub</span>
+    </a>
+    <a href="https://linkedin.com" target="_blank" class="social-desktop-btn bg-slate-100 dark:bg-slate-900 hover:bg-primary text-slate-600 dark:text-slate-300 hover:text-white">
+      <span class="icon-wrap"><i class="fa-brands fa-linkedin-in text-xl"></i></span>
+      <span class="text-wrap text-sm font-bold">LinkedIn</span>
+    </a>
+    <a href="https://instagram.com/yroynn" target="_blank" class="social-desktop-btn bg-slate-100 dark:bg-slate-900 hover:bg-primary text-slate-600 dark:text-slate-300 hover:text-white">
+      <span class="icon-wrap"><i class="fa-brands fa-instagram text-xl"></i></span>
+      <span class="text-wrap text-sm font-bold">Instagram</span>
+    </a>
+    <div class="w-8 h-px bg-slate-400 dark:bg-slate-600 self-center my-1"></div>
+    <a href="mailto:yanzgg275@gmail.com" class="social-desktop-btn bg-slate-100 dark:bg-slate-900 hover:bg-primary text-slate-600 dark:text-slate-300 hover:text-white">
+      <span class="icon-wrap"><i class="fa-solid fa-envelope text-xl"></i></span>
+      <span class="text-wrap text-sm font-bold">Email</span>
+    </a>
+  </div>
+
+  <!-- Floating Socials Mobile -->
+  <div class="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-40 flex flex-row gap-2 px-3 py-2 rounded-full bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-lightborder dark:border-slate-700 shadow-lg">
+    <a href="https://github.com/yanzyuyu" target="_blank" class="group relative flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 active:scale-110 transition-transform">
+      <i class="fa-brands fa-github text-xl"></i>
+      <span class="absolute -top-8 bg-slate-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-active:opacity-100 transition-opacity pointer-events-none">GitHub</span>
+    </a>
+    <a href="https://linkedin.com" target="_blank" class="group relative flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 active:scale-110 transition-transform">
+      <i class="fa-brands fa-linkedin-in text-xl"></i>
+      <span class="absolute -top-8 bg-slate-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-active:opacity-100 transition-opacity pointer-events-none">LinkedIn</span>
+    </a>
+    <a href="https://www.instagram.com/yroynn" target="_blank" class="group relative flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 active:scale-110 transition-transform">
+      <i class="fa-brands fa-instagram text-xl"></i>
+      <span class="absolute -top-8 bg-slate-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-active:opacity-100 transition-opacity pointer-events-none">Instagram</span>
+    </a>
+    <a href="mailto:yanzgg275@gmail.com" class="group relative flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 active:scale-110 transition-transform">
+      <i class="fa-solid fa-envelope text-xl"></i>
+      <span class="absolute -top-8 bg-slate-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-active:opacity-100 transition-opacity pointer-events-none">Email</span>
+    </a>
+  </div>
+
+  <!-- Navbar -->
+  <header class="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-lightbg/70 dark:bg-darkbg/70 border-b border-lightborder dark:border-borderbg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+      <a href="#home" class="font-heading flex items-center gap-2 text-lg sm:text-xl font-bold tracking-tight hover:text-primary transition-colors">
+        <span class="text-primary">&lt;</span>
+        <span>yanzyuyu</span>
+        <span class="text-primary">/&gt;</span>
+      </a>
+
+      <nav class="hidden md:flex items-center nav-container">
+        <div id="nav-bubble" class="nav-bubble"></div>
+        <a href="#home" class="nav-link text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary">Home</a>
+        <a href="#about" class="nav-link text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary">About</a>
+        <a href="#cv" class="nav-link text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary">Experience</a>
+        <a href="#projects" class="nav-link text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary">Projects</a>
+        <a href="#skills" class="nav-link text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary">Skills</a>
+        <a href="#contact" class="nav-link text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary">Contact</a>
+      </nav>
+
+      <div class="flex items-center gap-2 sm:gap-4">
+        <button id="theme-toggle" class="w-9 h-9 flex items-center justify-center rounded-lg border border-lightborder dark:border-borderbg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+          <i class="fa-solid fa-sun text-amber-500 hidden dark:block"></i>
+          <i class="fa-solid fa-moon text-slate-700 block dark:hidden"></i>
+        </button>
+        
+        <a href="#contact" class="hidden md:block px-5 py-2.5 rounded-xl text-sm font-semibold border border-lightborder dark:border-slate-600 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all">Hire Me</a>
+        
+        <button id="menu-toggle" class="md:hidden p-2">
+          <i class="fa-solid fa-bars text-2xl"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Sidebar Menu -->
+  <div id="mobile-backdrop" class="md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[60]"></div>
+  <div id="mobile-sidebar" class="md:hidden fixed top-0 right-0 h-full w-4/5 max-w-sm bg-lightbg dark:bg-darkbg z-[70] flex flex-col p-8 shadow-2xl">
+    <div class="flex justify-between items-center mb-12">
+      <span class="font-heading text-xl font-bold text-primary">Menu</span>
+      <button id="menu-close" class="p-2">
+        <i class="fa-solid fa-xmark text-2xl"></i>
+      </button>
+    </div>
+    <nav class="flex flex-col gap-6">
+      <a href="#home" class="mobile-link font-heading text-3xl font-bold text-slate-900 dark:text-white hover:text-primary transition-colors">Home</a>
+      <a href="#about" class="mobile-link font-heading text-3xl font-bold text-slate-900 dark:text-white hover:text-primary transition-colors">About</a>
+      <a href="#cv" class="mobile-link font-heading text-3xl font-bold text-slate-900 dark:text-white hover:text-primary transition-colors">Experience</a>
+      <a href="#projects" class="mobile-link font-heading text-3xl font-bold text-slate-900 dark:text-white hover:text-primary transition-colors">Projects</a>
+      <a href="#skills" class="mobile-link font-heading text-3xl font-bold text-slate-900 dark:text-white hover:text-primary transition-colors">Skills</a>
+      <a href="#contact" class="mobile-link font-heading text-3xl font-bold text-slate-900 dark:text-white hover:text-primary transition-colors">Contact</a>
+    </nav>
+  </div>
+
+  <!-- Hero Section -->
+  <section id="home" class="min-h-screen flex items-center pt-24 pb-24 md:pb-12 relative overflow-hidden">
+    <canvas id="three-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-100"></canvas>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-12 items-center w-full z-10 relative">
+      <div id="hero-text" class="scroll-reveal">
+        <!-- <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white dark:bg-slate-800 border border-lightborder dark:border-slate-700 text-primary text-[10px] sm:text-xs font-semibold uppercase tracking-wider mb-6">
+          <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+          Ready For Opportunities
+        </div> -->
+        <h1 class="font-heading hero-title font-extrabold tracking-tight mb-4 text-slate-900 dark:text-white">
+          M Harun Ar Royyan
+        </h1>
+        <h2 class="font-heading text-xl sm:text-2xl md:text-3xl font-semibold mb-6 flex items-center gap-2 text-slate-700 dark:text-slate-300">
+          <span>I'm a</span>
+          <span id="typed-text" class="text-primary"></span>
+          <span class="w-0.5 h-6 sm:h-8 bg-primary animate-pulse"></span>
+        </h2>
+        <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg mb-8 max-w-xl leading-relaxed">
+          Beginning in cybersecurity, system automation with Python and Bash, and building responsive web applications. Dedicated to maintaining system integrity.
+        </p>
+        <div class="flex flex-wrap gap-3 sm:gap-4">
+          <a href="#contact" class="btn-anim px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl text-sm sm:text-base font-semibold bg-primary text-white hover:bg-emerald-600 transition-all flex items-center gap-2">
+            <span>Contact Me</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="./avatar.jpg" download class="btn-anim px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl text-sm sm:text-base font-semibold bg-white dark:bg-slate-800 border border-lightborder dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all flex items-center gap-2">
+            <span>Download CV</span>
+            <i class="fa-solid fa-download"></i>
+          </a>
+        </div>
+      </div>
+      
+      <div class="flex justify-center md:justify-end scroll-reveal">
+        <!-- Tombol ini sekarang memanggil openProfileModal() -->
+        <div id="tilt-profile" class="tilt-card relative w-56 h-56 sm:w-72 sm:h-72 md:w-96 md:h-96 rounded-3xl overflow-hidden fancy-border shadow-xl flex items-center justify-center p-2 cursor-pointer bg-white dark:bg-slate-800" onclick="openProfileModal()">
+          <div class="tilt-inner w-full h-full flex flex-col items-center justify-center gap-4 text-center text-slate-500 dark:text-slate-400">
+            <i class="fa-solid fa-user text-8xl"></i>
+            <span>Klik untuk melihat detail</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-16 sm:py-24 border-t border-lightborder dark:border-borderbg relative bg-lightbg dark:bg-darkbg z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 scroll-reveal">
+        <h2 class="font-heading section-title font-bold tracking-tight mb-4 text-slate-900 dark:text-white">About Me</h2>
+        <div class="w-12 h-0.5 bg-primary mx-auto"></div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 sm:gap-12 items-center">
+        <div class="space-y-6 scroll-reveal">
+          <h3 class="font-heading text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Who is M Harun Ar Royyan?</h3>
+          <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-base sm:text-lg">
+            I am a student developer with a passion for building safe, efficient, and interactive digital solutions. My interest in technology lies in the intersection between scripting utilities, security posture analysis, and functional interface design.
+          </p>
+          <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-base sm:text-lg">
+            Through exploring defensive system hardening, writing custom system utilities in Bash and Python, and structuring interfaces with Tailwind CSS, I focus on the performance and protection of modern server systems.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 gap-4 sm:gap-6">
+          <div class="scroll-reveal">
+            <div class="tilt-card p-4 sm:p-6 rounded-2xl fancy-border group cursor-pointer bg-white dark:bg-cardbg h-full">
+              <div class="tilt-inner">
+                <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-900 border border-lightborder dark:border-slate-700 flex items-center justify-center text-primary mb-4">
+                  <i class="fa-solid fa-shield-halved text-xl"></i>
+                </div>
+                <h4 class="font-heading text-base sm:text-lg font-bold mb-2 text-slate-900 dark:text-white">Security First</h4>
+                <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm">Identifying server risks and building protection strategies.</p>
+              </div>
+            </div>
+          </div>
+          <div class="scroll-reveal">
+            <div class="tilt-card p-4 sm:p-6 rounded-2xl fancy-border group cursor-pointer bg-white dark:bg-cardbg h-full">
+              <div class="tilt-inner">
+                <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-900 border border-lightborder dark:border-slate-700 flex items-center justify-center text-primary mb-4">
+                  <i class="fa-solid fa-terminal text-xl"></i>
+                </div>
+                <h4 class="font-heading text-base sm:text-lg font-bold mb-2 text-slate-900 dark:text-white">Automation</h4>
+                <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm">Writing utility bash and python commands to handle operations.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CV Section -->
+  <section id="cv" class="py-16 sm:py-24 border-t border-lightborder dark:border-borderbg relative bg-slate-50 dark:bg-slate-900/50 z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 scroll-reveal">
+        <h2 class="font-heading section-title font-bold tracking-tight mb-4 text-slate-900 dark:text-white">Experience & Education</h2>
+        <div class="w-12 h-0.5 bg-primary mx-auto"></div>
+        <p class="text-slate-500 mt-4 text-sm">Klik item untuk melihat detail/sertifikat</p>
+      </div>
+      
+      <div id="timeline-wrapper" class="relative ml-4 md:ml-32 md:mr-32 scroll-reveal">
+        <div class="absolute left-0 top-2 w-0.5 h-full bg-slate-300 dark:bg-slate-700 md:left-1/2 md:-translate-x-1/2"></div>
+        <div id="timeline-progress" class="timeline-line top-2 md:left-1/2 md:-translate-x-1/2"></div>
+
+        <div class="space-y-12">
+          <div class="timeline-item relative pl-8 md:pl-0 group cursor-pointer" onclick="openSchoolModal()">
+            <div class="timeline-dot absolute -left-[5px] top-2 w-3 h-3 rounded-full bg-white dark:bg-darkbg border-2 border-primary transition-all md:left-1/2 md:-translate-x-1/2 z-10"></div>
+            <div class="md:w-1/2 md:pr-12 md:text-right group-hover:translate-x-1 transition-transform">
+              <span class="text-xs font-semibold text-slate-500 px-3 py-1 rounded-xl bg-white dark:bg-slate-800 border border-lightborder dark:border-slate-700 w-fit mt-1 md:ml-auto inline-block">2025 - Present</span>
+              <h3 class="font-heading text-lg sm:text-xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors mt-2">Vocational High School (SMK)</h3>
+              <h4 class="text-sm font-semibold mb-2 text-primary">Teknik Komputer & Jaringan</h4>
+              <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm sm:text-base">
+                Belajar administrasi server, dasar website (html, css, js), dan dasar backend website.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item relative pl-8 md:pl-0 group cursor-pointer" onclick="openCertModal('https://i.ibb.co.com/Q7GP5jGV/Save-Clip-App-587163697-17870995053495882-2087003458093653755-n.jpg', 'Pengenalan Internet Of Things')">
+            <div class="timeline-dot absolute -left-[5px] top-2 w-3 h-3 rounded-full bg-white dark:bg-darkbg border-2 border-secondary transition-all md:left-1/2 md:-translate-x-1/2 z-10"></div>
+            <div class="md:w-1/2 md:pl-12 md:ml-auto group-hover:-translate-x-1 transition-transform">
+              <span class="text-xs font-semibold text-slate-500 px-3 py-1 rounded-xl bg-white dark:bg-slate-800 border border-lightborder dark:border-slate-700 w-fit mt-1 inline-block">2025</span>
+              <h3 class="font-heading text-lg sm:text-xl font-bold text-slate-900 dark:text-white group-hover:text-secondary transition-colors mt-2">Pengenalan Internet Of Things</h3>
+              <h4 class="text-sm font-semibold mb-2 text-secondary">Pelatihan basic</h4>
+              <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm sm:text-base">
+                Belajar tentang dasar-dasar Internet of Things (IoT).
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item relative pl-8 md:pl-0 group cursor-pointer" onclick="openCertModal('https://i.ibb.co.com/LhbTgS0S/Save-Clip-App-603065998-17870995080495882-1895932588151588171-n.jpg', 'Cyber Defense Competition')">
+            <div class="timeline-dot absolute -left-[5px] top-2 w-3 h-3 rounded-full bg-white dark:bg-darkbg border-2 border-primary transition-all md:left-1/2 md:-translate-x-1/2 z-10"></div>
+            <div class="md:w-1/2 md:pr-12 md:text-right group-hover:translate-x-1 transition-transform">
+              <span class="text-xs font-semibold text-slate-500 px-3 py-1 rounded-xl bg-white dark:bg-slate-800 border border-lightborder dark:border-slate-700 w-fit mt-1 md:ml-auto inline-block">2025</span>
+              <h3 class="font-heading text-lg sm:text-xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors mt-2">Ethical Hackers For Dummies</h3>
+              <h4 class="text-sm font-semibold mb-2 text-primary">Digital Talent Scholarship</h4>
+              <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm sm:text-base">
+                Belajar tentang etika hacking dan teknik keamanan siber.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="py-16 sm:py-24 border-t border-lightborder dark:border-borderbg relative bg-lightbg dark:bg-darkbg z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 scroll-reveal">
+        <h2 class="font-heading section-title font-bold tracking-tight mb-4 text-slate-900 dark:text-white">Featured Projects</h2>
+        <div class="w-12 h-0.5 bg-primary mx-auto"></div>
+      </div>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 mb-16 sm:mb-20">
+        <div class="scroll-reveal">
+          <div class="tilt-card rounded-2xl overflow-hidden fancy-border group cursor-pointer bg-white dark:bg-cardbg h-full">
+            <div class="tilt-inner flex flex-col h-full">
+              <div class="relative h-40 sm:h-48 overflow-hidden bg-slate-100 dark:bg-slate-900 flex items-center justify-center text-slate-400 dark:text-slate-600">
+                <img src="https://i.ibb.co.com/9mhzNhGF/Screenshot-20260717-083726.png" alt="" srcset="">
+              </div>
+              <div class="p-4 sm:p-6 flex flex-col flex-grow">
+                <span class="text-[10px] font-bold text-primary mb-2">BASH SCRIPTING</span>
+                <h3 class="font-heading text-lg sm:text-xl font-bold mb-2 text-slate-900 dark:text-white group-hover:text-primary transition-colors">Android Performance Optimization Module</h3>
+                <p class="text-slate-600 dark:text-slate-400 text-sm mb-6 flex-grow">Universal PerfMax is a root-based Android module that applies low-level system and kernel optimizations across multiple chipsets. It dynamically adjusts CPU, GPU, memory, scheduler, and I/O behavior to prioritize maximum performance.</p>
+                  <a href="https://github.com/yanzyuyu/PerfMax/archive/refs/heads/main.zip" download class="btn-anim flex-1 px-6 py-3 rounded-xl text-sm font-semibold bg-primary text-white hover:bg-emerald-600 transition-all flex items-center justify-center gap-2">
+                      <i class="fa-solid fa-download"></i> Download (.zip)
+                  </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scroll-reveal">
+          <div class="tilt-card rounded-2xl overflow-hidden fancy-border group cursor-pointer bg-white dark:bg-cardbg h-full">
+            <div class="tilt-inner flex flex-col h-full">
+              <div class="relative h-40 sm:h-48 overflow-hidden bg-slate-100 dark:bg-slate-900 flex items-center justify-center text-slate-400 dark:text-slate-600">
+                <img src="https://i.ibb.co.com/TMCnTdyr/Screenshot-20260717-083605.png" alt="" srcset="">
+              </div>
+              <div class="p-4 sm:p-6 flex flex-col flex-grow">
+                <span class="text-[10px] font-bold text-secondary mb-2">React, Vite, Tailwindcss</span>
+                <h3 class="font-heading text-lg sm:text-xl font-bold mb-2 text-slate-900 dark:text-white group-hover:text-secondary transition-colors">SoundStream - Modern Music Player</h3>
+                <p class="text-slate-600 dark:text-slate-400 text-sm mb-6 flex-grow">SoundStream adalah aplikasi pemutar musik modern berbasis web dan mobile yang memberikan pengalaman mendengarkan musik yang mulus, responsif, dan elegan.</p>
+                  <a href="https://github.com/yanzyuyu/musicplayerUPDT/archive/refs/heads/main.zip" download class="btn-anim flex-1 px-6 py-3 rounded-xl text-sm font-semibold bg-primary text-white hover:bg-emerald-600 transition-all flex items-center justify-center gap-2">
+                      <i class="fa-solid fa-download"></i> Download (.zip)
+                  </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scroll-reveal">
+          <div class="tilt-card rounded-2xl overflow-hidden fancy-border group cursor-pointer bg-white dark:bg-cardbg h-full">
+            <div class="tilt-inner flex flex-col h-full">
+              <div class="relative h-40 sm:h-48 overflow-hidden bg-slate-100 dark:bg-slate-900 flex items-center justify-center text-slate-400 dark:text-slate-600">
+                <img src="https://i.ibb.co.com/3YvLMDCf/Screenshot-20260717-090032.png" alt="" srcset="">
+              </div>
+              <div class="p-4 sm:p-6 flex flex-col flex-grow">
+                <span class="text-[10px] font-bold text-primary mb-2">HTML / TAILWIND</span>
+                <h3 class="font-heading text-lg sm:text-xl font-bold mb-2 text-slate-900 dark:text-white group-hover:text-primary transition-colors">Web Download Aplikasi</h3>
+                <p class="text-slate-600 dark:text-slate-400 text-sm mb-6 flex-grow">Website untuk mendownload aplikasi mobile (Ynzstore).</p>
+                <div class="flex flex-col sm:flex-row gap-3 mt-auto">
+                  <button onclick="openWebModal()" class="btn-anim text-sm font-semibold flex items-center gap-2 text-primary self-start">
+                    Visit Web <i class="fa-solid fa-globe text-xs"></i>
+                  </button>
+                  <button onclick="openSourceModal()" class="btn-anim text-sm font-semibold flex items-center gap-2 text-slate-500 dark:text-slate-400 self-start">
+                    Get Source <i class="fa-solid fa-file-zipper text-xs"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GitHub Repos -->
+      <div class="mt-16 sm:mt-20 scroll-reveal">
+        <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+          <h3 class="font-heading text-2xl font-bold tracking-tight mb-2 text-slate-900 dark:text-white">GitHub Repositories</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm">Dynamically fetched public repositories</p>
+        </div>
+        <div id="github-repos-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div class="col-span-full text-center py-12 text-slate-500">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+            <span>Loading repositories...</span>
+          </div>
+        </div>
+        <div id="pagination-controls" class="flex flex-wrap justify-center gap-2 mt-8"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="py-16 sm:py-24 border-t border-lightborder dark:border-borderbg relative bg-slate-50 dark:bg-slate-900/50 z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 scroll-reveal">
+        <h2 class="font-heading section-title font-bold tracking-tight mb-4 text-slate-900 dark:text-white">Hard Skills</h2>
+        <div class="w-12 h-0.5 bg-primary mx-auto"></div>
+      </div>
+      
+      <div id="skills-container" class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto scroll-reveal">
+        <div class="space-y-6">
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-semibold text-slate-900 dark:text-white text-sm sm:text-base">Bash Scripting</span>
+              <span class="text-primary text-xs sm:text-sm font-bold">35%</span>
+            </div>
+            <div class="h-1.5 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+              <div class="skill-bar h-full bg-primary rounded-full" data-width="35%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-semibold text-slate-900 dark:text-white text-sm sm:text-base">Python Development</span>
+              <span class="text-secondary text-xs sm:text-sm font-bold">20%</span>
+            </div>
+            <div class="h-1.5 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+              <div class="skill-bar h-full bg-secondary rounded-full" data-width="20%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-semibold text-slate-900 dark:text-white text-sm sm:text-base">Tailwind CSS</span>
+              <span class="text-secondary text-xs sm:text-sm font-bold">55%</span>
+            </div>
+            <div class="h-1.5 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+              <div class="skill-bar h-full bg-secondary rounded-full" data-width="55%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-semibold text-slate-900 dark:text-white text-sm sm:text-base">Cybersecurity Basics</span>
+              <span class="text-primary text-xs sm:text-sm font-bold">45%</span>
+            </div>
+            <div class="h-1.5 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+              <div class="skill-bar h-full bg-primary rounded-full" data-width="45%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-16 sm:py-24 border-t border-lightborder dark:border-borderbg relative bg-lightbg dark:bg-darkbg z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center scroll-reveal">
+      <h2 class="font-heading section-title font-bold tracking-tight mb-4 text-slate-900 dark:text-white">Get In Touch</h2>
+      <div class="w-12 h-0.5 bg-primary mx-auto mb-12"></div>
+      <p class="text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto text-sm sm:text-base px-4">I am always interested in discussing technical structures, automation scripting, and cybersecurity methodologies. Drop me a line!</p>
+      <a href="mailto:yanzgg275@gmail.com" class="btn-anim inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-sm sm:text-base font-semibold bg-primary text-white hover:bg-emerald-600 transition-all">
+        <i class="fa-solid fa-envelope"></i>
+        Email Me
+      </a>
+    </div>
+  </section>
+
+  <footer class="py-8 border-t border-lightborder dark:border-borderbg text-center bg-lightbg dark:bg-darkbg z-10">
+    <p class="text-xs sm:text-sm text-slate-500">&copy; 2025 yanzyuyu. All rights reserved.</p>
+  </footer>
+
+  <!-- Profile Data Modal (NEW) -->
+  <div id="profile-modal" class="modal-overlay fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="modal-content w-full max-w-3xl max-h-[90vh] bg-white dark:bg-slate-900 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+      <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-800/50">
+        <h3 class="font-heading text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2"><i class="fa-solid fa-id-card text-primary"></i> Profile Details</h3>
+        <button id="close-profile-btn" class="p-2 text-slate-500 hover:text-red-500 transition-colors">
+          <i class="fa-solid fa-xmark text-2xl"></i>
+        </button>
+      </div>
+      <div class="p-6 overflow-y-auto custom-scrollbar grid md:grid-cols-3 gap-6">
+        <!-- Left: Photo -->
+        <div class="flex flex-col items-center gap-4">
+          <div class="w-40 h-40 rounded-2xl overflow-hidden bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-slate-400 shadow-lg border border-slate-300 dark:border-slate-700">
+            <!-- Ganti dengan <img src="./avatar.jpg" class="w-full h-full object-cover"> nanti -->
+            <i class="fa-solid fa-user text-7xl"></i>
+          </div>
+          <div class="text-center">
+            <h4 class="font-heading text-xl font-bold text-slate-900 dark:text-white">M Harun Ar Royyan</h4>
+            <p class="text-sm text-primary font-semibold">Cybersecurity & Web Dev</p>
+          </div>
+        </div>
+
+        <!-- Right: Data -->
+        <div class="md:col-span-2 bg-slate-50 dark:bg-slate-800/50 rounded-xl p-6 border border-slate-200 dark:border-slate-700 space-y-6">
+          <div>
+            <h4 class="font-heading font-bold text-primary text-lg mb-3 border-b border-slate-200 dark:border-slate-700 pb-2">Personal Data</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6">
+              <div>
+                <span class="block text-xs text-slate-500 mb-1">Tempat, Tanggal Lahir</span>
+                <span class="text-sm font-medium text-slate-800 dark:text-slate-200">Bantul, 7 November 2007</span>
+              </div>
+              <div>
+                <span class="block text-xs text-slate-500 mb-1">Nomor HP / WhatsApp</span>
+                <span class="text-sm font-medium text-slate-800 dark:text-slate-200">+62 831-5572-2569</span>
+              </div>
+              <div class="sm:col-span-2">
+                <span class="block text-xs text-slate-500 mb-1">Alamat</span>
+                <span class="text-sm font-medium text-slate-800 dark:text-slate-200">Jl. Nogosari 01, Imogiri Wukirsari Bantul</span>
+              </div>
+              <div>
+                <span class="block text-xs text-slate-500 mb-1">Email</span>
+                <span class="text-sm font-medium text-slate-800 dark:text-slate-200">yanzgg275@gmail.com</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="font-heading font-bold text-primary text-lg mb-3 border-b border-slate-200 dark:border-slate-700 pb-2">School Data</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6">
+              <div>
+                <span class="block text-xs text-slate-500 mb-1">Asal Sekolah</span>
+                <span class="text-sm font-medium text-slate-800 dark:text-slate-200">SMK Muhammadiyah 1 Bantul</span>
+              </div>
+              <div>
+                <span class="block text-xs text-slate-500 mb-1">Kelas</span>
+                <span class="text-sm font-medium text-slate-800 dark:text-slate-200">XI (Sebelas)</span>
+              </div>
+              <div>
+                <span class="block text-xs text-slate-500 mb-1">Jurusan</span>
+                <span class="text-sm font-medium text-slate-800 dark:text-slate-200">Rekayasa Perangkat Lunak</span>
+              </div>
+              <div>
+                <span class="block text-xs text-slate-500 mb-1">NIS</span>
+                <span class="text-sm font-medium text-slate-800 dark:text-slate-200">17457</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Web Project Modal -->
+  <div id="web-modal" class="modal-overlay fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="modal-content w-full max-w-4xl h-[80vh] bg-slate-100 dark:bg-slate-900 rounded-2xl overflow-hidden shadow-2xl flex flex-col">
+      <div class="bg-slate-200 dark:bg-slate-800 p-3 flex items-center gap-2 border-b border-slate-300 dark:border-slate-700">
+        <button id="close-web-btn" class="w-3.5 h-3.5 rounded-full bg-red-500 hover:bg-red-600 transition-colors flex items-center justify-center group">
+          <i class="fa-solid fa-xmark text-[8px] text-red-500 group-hover:text-white opacity-0 group-hover:opacity-100 transition-opacity"></i>
+        </button>
+        <div class="w-3.5 h-3.5 rounded-full bg-yellow-500"></div>
+        <div class="w-3.5 h-3.5 rounded-full bg-green-500"></div>
+        <div class="flex-1 bg-white dark:bg-slate-950 rounded-md px-3 py-1 text-slate-500 text-xs font-mono ml-2 text-center truncate">
+          <i class="fa-solid fa-lock text-[10px] mr-1"></i> https://ynzstore.web.id/download/
+        </div>
+      </div>
+      <div class="flex-1 bg-white dark:bg-slate-950 overflow-y-auto custom-scrollbar flex items-center justify-center p-8">
+        <div class="text-center">
+          <iframe src="https://ynzstore.web.id/download/" width="900" height="800"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Download Source Modal -->
+  <div id="source-modal" class="modal-overlay fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="modal-content w-full max-w-md bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-8 relative flex flex-col items-center text-center">
+      <button id="close-source-btn" class="absolute top-4 right-4 p-2 text-slate-500 hover:text-red-500 transition-colors z-10">
+        <i class="fa-solid fa-xmark text-2xl"></i>
+      </button>
+      <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-6 mt-4">
+        <i class="fa-solid fa-box text-3xl"></i>
+      </div>
+      <h4 class="font-heading text-xl font-bold text-slate-900 dark:text-white mb-3">Download Source Code</h4>
+      <p class="text-slate-600 dark:text-slate-400 text-sm mb-8">Klik tombol di bawah untuk mengunduh file source code proyek dalam format .apk</p>
+      <div class="flex flex-col sm:flex-row gap-3 w-full">
+        <a href="https://download.bukaolshop.com/files/apk/ynzstoreys.apk" download class="btn-anim flex-1 px-6 py-3 rounded-xl text-sm font-semibold bg-primary text-white hover:bg-emerald-600 transition-all flex items-center justify-center gap-2">
+          <i class="fa-solid fa-download"></i> Download (.apk)
+        </a>
+        <button onclick="closeSourceModal()" class="btn-anim flex-1 px-6 py-3 rounded-xl text-sm font-semibold bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition-all">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Certificate Modal -->
+  <div id="cert-modal" class="modal-overlay fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="modal-content w-full max-w-3xl max-h-[85vh] bg-white dark:bg-slate-900 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+      <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-800/50">
+        <h3 id="cert-title" class="font-heading text-lg font-bold text-slate-900 dark:text-white">Certificate</h3>
+        <button id="close-cert-btn" class="p-2 text-slate-500 hover:text-red-500 transition-colors">
+          <i class="fa-solid fa-xmark text-2xl"></i>
+        </button>
+      </div>
+      <div class="p-4 flex-1 overflow-y-auto custom-scrollbar flex items-center justify-center bg-slate-100 dark:bg-slate-950">
+        <img id="cert-img" src="" class="max-w-full max-h-[65vh] rounded-lg shadow-2xl border border-slate-200 dark:border-slate-800" alt="Certificate">
+      </div>
+    </div>
+  </div>
+
+  <!-- School Detail Modal -->
+  <div id="school-modal" class="modal-overlay fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="modal-content w-full max-w-4xl max-h-[85vh] bg-white dark:bg-slate-900 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+      <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-800/50">
+        <h3 class="font-heading text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2"><i class="fa-solid fa-school text-primary"></i> School Details</h3>
+        <button id="close-school-btn" class="p-2 text-slate-500 hover:text-red-500 transition-colors">
+          <i class="fa-solid fa-xmark text-2xl"></i>
+        </button>
+      </div>
+      <div class="p-6 overflow-y-auto custom-scrollbar grid md:grid-cols-2 gap-6">
+        <div class="flex flex-col gap-4">
+          <div class="aspect-video bg-slate-200 dark:bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 overflow-hidden">
+            <img src="https://i.ibb.co.com/23VxXr7W/img.jpg" alt="" srcset="">
+          </div>
+          <div class="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-5 border border-slate-200 dark:border-slate-700 space-y-3">
+            <h4 class="font-heading font-bold text-primary text-lg mb-2 border-b border-slate-200 dark:border-slate-700 pb-2">Data Sekolah (Kemendikdasmen)</h4>
+            <div class="flex justify-between text-sm"><span class="text-slate-500">NPSN</span><span class="font-medium text-slate-800 dark:text-slate-200">20400383</span></div>
+            <div class="flex justify-between text-sm"><span class="text-slate-500">Status</span><span class="font-medium text-slate-800 dark:text-slate-200">Swasta</span></div>
+            <div class="flex justify-between text-sm"><span class="text-slate-500">Bentuk Pendidikan</span><span class="font-medium text-slate-800 dark:text-slate-200">SMK</span></div>
+            <div class="flex justify-between text-sm"><span class="text-slate-500">Akreditasi</span><span class="font-medium text-emerald-500 font-bold">A</span></div>
+            <div class="flex justify-between text-sm"><span class="text-slate-500">Kepala Sekolah</span><span class="font-medium text-slate-800 dark:text-slate-200">Drs. Budi Santoso, M.M.</span></div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-4">
+          <div class="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-5 border border-slate-200 dark:border-slate-700">
+            <h4 class="font-heading font-bold text-primary text-lg mb-2 flex items-center gap-2"><i class="fa-solid fa-location-dot"></i> Alamat</h4>
+            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              JL. PARANGTRITIS KM 12 MANDING, Kec. Bantul, Kab. Bantul, Prov. D.I. Yogyakarta
+            </p>
+          </div>
+          <div class="flex-1 min-h-[300px] rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-inner bg-slate-200 dark:bg-slate-800">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3951.930786458157!2d110.34652507500617!3d-7.902299992120737!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zN8KwNTQnMDguMyJTIDExMMKwMjAnNTYuOCJF!5e0!3m2!1sid!2sid!4v1784249234410!5m2!1sid!2sid" 
+              width="100%" 
+              height="100%" 
+              style="border:0; filter: invert(0.9) hue-rotate(180deg);" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal README -->
+  <div id="readme-modal" class="modal-overlay fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="modal-content bg-white dark:bg-slate-950 border border-lightborder dark:border-slate-800 rounded-3xl w-full max-w-4xl max-h-[80vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="px-4 sm:px-6 py-4 border-b border-lightborder dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-900/50">
+        <h3 id="modal-title" class="font-heading font-bold text-base sm:text-lg text-slate-900 dark:text-white">Repository README</h3>
+        <button id="close-modal" class="p-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800">
+          <i class="fa-solid fa-xmark text-2xl text-slate-600 dark:text-slate-300"></i>
+        </button>
+      </div>
+      <div id="modal-body" class="p-4 sm:p-8 overflow-y-auto flex-grow custom-scrollbar text-slate-700 dark:text-slate-300 text-sm sm:text-base"></div>
+    </div>
+  </div>
+
+  <script>
+    const isDesktop = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+    // ==========================================
+    // 1. THEME & MOBILE SIDEBAR
+    // ==========================================
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
+
+    const mobileBackdrop = document.getElementById('mobile-backdrop');
+    const mobileSidebar = document.getElementById('mobile-sidebar');
+    
+    function openMobileMenu() {
+      mobileBackdrop.classList.add('active');
+      mobileSidebar.classList.add('active');
+      document.querySelectorAll('.mobile-link').forEach((link, index) => {
+        link.style.transitionDelay = `${0.1 + index * 0.08}s`;
+      });
+    }
+    function closeMobileMenu() {
+      mobileBackdrop.classList.remove('active');
+      mobileSidebar.classList.remove('active');
+      document.querySelectorAll('.mobile-link').forEach((link) => link.style.transitionDelay = '0s');
+    }
+
+    document.getElementById('menu-toggle').addEventListener('click', openMobileMenu);
+    document.getElementById('menu-close').addEventListener('click', closeMobileMenu);
+    mobileBackdrop.addEventListener('click', closeMobileMenu);
+    document.querySelectorAll('.mobile-link').forEach(link => link.addEventListener('click', closeMobileMenu));
+
+    // ==========================================
+    // 2. DESKTOP NAV BUBBLE EFFECT
+    // ==========================================
+    const navContainer = document.querySelector('.nav-container');
+    const navBubble = document.getElementById('nav-bubble');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    navLinks.forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        const rect = link.getBoundingClientRect();
+        const containerRect = navContainer.getBoundingClientRect();
+        navBubble.style.width = `${rect.width}px`;
+        navBubble.style.left = `${rect.left - containerRect.left}px`;
+        navBubble.style.opacity = '1';
+        navLinks.forEach(l => l.classList.remove('text-slate-900', 'dark:text-white'));
+        link.classList.add('text-slate-900', 'dark:text-white');
+      });
+    });
+    navContainer.addEventListener('mouseleave', () => {
+      navBubble.style.opacity = '0';
+      navBubble.style.width = '0';
+      navLinks.forEach(l => l.classList.remove('text-slate-900', 'dark:text-white'));
+    });
+
+    // ==========================================
+    // 3. 3D TILT EFFECT (Desktop Only)
+    // ==========================================
+    function attachTiltEvents() {
+      if (!isDesktop) return;
+      document.querySelectorAll('.tilt-card').forEach(card => {
+        if (card.dataset.tiltActive === 'true') return;
+        card.dataset.tiltActive = 'true';
+
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const rotateX = (y - rect.height / 2) / 15;
+          const rotateY = (rect.width / 2 - x) / 15;
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+        });
+      });
+    }
+    attachTiltEvents();
+
+    // ==========================================
+    // 4. ALL MODALS LOGIC
+    // ==========================================
+    function setupModal(modalId, closeBtnId, closeOnClickOutside = true) {
+      const modal = document.getElementById(modalId);
+      const closeBtn = document.getElementById(closeBtnId);
+      
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+      
+      if (closeOnClickOutside) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+          }
+        });
+      }
+    }
+
+    // Profile Modal
+    function openProfileModal() {
+      document.getElementById('profile-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    setupModal('profile-modal', 'close-profile-btn');
+
+    // Web Project Modal
+    function openWebModal() {
+      document.getElementById('web-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    setupModal('web-modal', 'close-web-btn');
+
+    // Source Download Modal
+    function openSourceModal() {
+      document.getElementById('source-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeSourceModal() {
+      document.getElementById('source-modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    setupModal('source-modal', 'close-source-btn');
+
+    // Certificate Modal
+    function openCertModal(imgSrc, title) {
+      const modal = document.getElementById('cert-modal');
+      document.getElementById('cert-title').textContent = title;
+      const img = document.getElementById('cert-img');
+      img.src = imgSrc;
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    setupModal('cert-modal', 'close-cert-btn');
+
+    // School Detail Modal
+    function openSchoolModal() {
+      document.getElementById('school-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    setupModal('school-modal', 'close-school-btn');
+
+    // Readme Modal
+    const readmeModal = document.getElementById('readme-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
+    function openModal(title, htmlContent) {
+      modalTitle.textContent = title;
+      modalBody.innerHTML = htmlContent;
+      readmeModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    setupModal('readme-modal', 'close-modal');
+
+    // ==========================================
+    // 5. SCROLL REVEAL
+    // ==========================================
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        } else {
+          entry.target.classList.remove('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.scroll-reveal').forEach(el => revealObserver.observe(el));
+
+    const skillsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const bars = entry.target.querySelectorAll('.skill-bar');
+        if (entry.isIntersecting) {
+          bars.forEach(bar => bar.style.width = bar.dataset.width);
+        } else {
+          bars.forEach(bar => bar.style.width = '0%');
+        }
+      });
+    }, { threshold: 0.3 });
+    const skillsContainer = document.getElementById('skills-container');
+    if(skillsContainer) skillsObserver.observe(skillsContainer);
+
+    // ==========================================
+    // 6. TIMELINE PROGRESS LINE ON SCROLL
+    // ==========================================
+    const timelineWrapper = document.getElementById('timeline-wrapper');
+    const timelineProgress = document.getElementById('timeline-progress');
+
+    function updateTimelineProgress() {
+      if (!timelineWrapper) return;
+      const rect = timelineWrapper.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      let startPoint = windowHeight * 0.8;
+      let endPoint = rect.height;
+      
+      let scrolled = startPoint - rect.top;
+      let progress = (scrolled / endPoint) * 100;
+      
+      if (progress < 0) progress = 0;
+      if (progress > 100) progress = 100;
+      
+      timelineProgress.style.height = `${progress}%`;
+    }
+
+    window.addEventListener('scroll', updateTimelineProgress);
+    window.addEventListener('resize', updateTimelineProgress);
+    updateTimelineProgress();
+
+    // ==========================================
+    // 7. THREE.JS ADAPTIVE PARTICLE NETWORK
+    // ==========================================
+    const canvas = document.getElementById('three-canvas');
+    if (canvas) {
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+      renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      const particleCount = isDesktop ? 2000 : 500;
+      const positions = new Float32Array(particleCount * 3);
+      const velocities = [];
+
+      for(let i=0; i<particleCount; i++) {
+        positions[i*3] = (Math.random() - 0.5) * 20;
+        positions[i*3+1] = (Math.random() - 0.5) * 20;
+        positions[i*3+2] = (Math.random() - 0.5) * 20;
+        velocities.push({ x: (Math.random() - 0.5) * 0.02, y: (Math.random() - 0.5) * 0.02, z: (Math.random() - 0.5) * 0.02 });
+      }
+
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      const material = new THREE.PointsMaterial({ color: 0x10b981, size: 0.04, transparent: true, opacity: 0.8 });
+      const points = new THREE.Points(geometry, material);
+      scene.add(points);
+
+      let lineSegments = null;
+      if (isDesktop) {
+        const lineMaterial = new THREE.LineBasicMaterial({ color: 0x0284c7, transparent: true, opacity: 0.1 });
+        lineSegments = new THREE.LineSegments(new THREE.BufferGeometry(), lineMaterial);
+        scene.add(lineSegments);
+      }
+
+      camera.position.z = 7;
+      let mouseX = 0, mouseY = 0;
+      
+      if (isDesktop) {
+        window.addEventListener('mousemove', (e) => {
+          mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+          mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        });
+      }
+
+      function animateThree() {
+        requestAnimationFrame(animateThree);
+        const posArr = points.geometry.attributes.position.array;
+
+        for(let i=0; i<particleCount; i++) {
+          posArr[i*3] += velocities[i].x;
+          posArr[i*3+1] += velocities[i].y;
+          posArr[i*3+2] += velocities[i].z;
+          if (Math.abs(posArr[i*3]) > 10) velocities[i].x *= -1;
+          if (Math.abs(posArr[i*3+1]) > 10) velocities[i].y *= -1;
+          if (Math.abs(posArr[i*3+2]) > 10) velocities[i].z *= -1;
+        }
+        points.geometry.attributes.position.needsUpdate = true;
+
+        if (isDesktop && lineSegments) {
+          const linePositions = [];
+          const lineCheckLimit = 100;
+          for(let i=0; i<lineCheckLimit; i++) {
+            for(let j=i+1; j<lineCheckLimit; j++) {
+              const dx = posArr[i*3] - posArr[j*3];
+              const dy = posArr[i*3+1] - posArr[j*3+1];
+              const dz = posArr[i*3+2] - posArr[j*3+2];
+              const dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
+              if(dist < 2) {
+                linePositions.push(posArr[i*3], posArr[i*3+1], posArr[i*3+2]);
+                linePositions.push(posArr[j*3], posArr[j*3+1], posArr[j*3+2]);
+              }
+            }
+          }
+          lineSegments.geometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+          lineSegments.geometry.attributes.position.needsUpdate = true;
+
+          camera.position.x += (mouseX * 2 - camera.position.x) * 0.03;
+          camera.position.y += (-mouseY * 2 - camera.position.y) * 0.03;
+        } else {
+          points.rotation.y += 0.001;
+        }
+
+        camera.lookAt(scene.position);
+        renderer.render(scene, camera);
+      }
+      animateThree();
+
+      window.addEventListener('resize', () => {
+        camera.aspect = canvas.clientWidth / canvas.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+      });
+    }
+
+    // ==========================================
+    // 8. TYPING EFFECT
+    // ==========================================
+    const typedTextElement = document.getElementById('typed-text');
+    const words = ["Cybersecurity Beginner", "Python Beginner", "Bash Script Beginner", "Web Developer Beginner", "Linux Enthusiast", "Open Source Contributor"];
+    let wordIndex = 0, charIndex = 0, isDeleting = false, typingSpeed = 100;
+    function typeEffect() {
+      const currentWord = words[wordIndex];
+      if (isDeleting) { typedTextElement.textContent = currentWord.substring(0, charIndex - 1); charIndex--; typingSpeed = 40; } 
+      else { typedTextElement.textContent = currentWord.substring(0, charIndex + 1); charIndex++; typingSpeed = 100; }
+      if (!isDeleting && charIndex === currentWord.length) { isDeleting = true; typingSpeed = 1500; } 
+      else if (isDeleting && charIndex === 0) { isDeleting = false; wordIndex = (wordIndex + 1) % words.length; typingSpeed = 500; }
+      setTimeout(typeEffect, typingSpeed);
+    }
+    typeEffect();
+
+    // ==========================================
+    // 9. GITHUB API
+    // ==========================================
+    const githubUsername = 'yanzyuyu';
+    const exactApiUrl = `https://api.github.com/users/yanzyuyu/repos?type=owner&sort=updated&per_page=100`;
+    const reposContainer = document.getElementById('github-repos-grid');
+    const paginationContainer = document.getElementById('pagination-controls');
+
+    let cachedRepos = [];
+    let currentPage = 1;
+    const perPage = 6;
+
+    async function loadReadme(repoName) {
+      openModal(repoName, `<div class="flex flex-col items-center justify-center py-12 text-slate-500"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div><span>Fetching README.md...</span></div>`);
+      try {
+        let res = await fetch(`https://raw.githubusercontent.com/${githubUsername}/${repoName}/main/README.md`);
+        if(!res.ok) res = await fetch(`https://raw.githubusercontent.com/${githubUsername}/${repoName}/master/README.md`);
+        if (res.ok) {
+          const content = await res.text();
+          modalBody.innerHTML = marked.parse(content);
+        } else { throw new Error("Not found"); }
+      } catch (e) {
+        modalBody.innerHTML = `<div class="text-center py-12 text-slate-500"><p>No README.md Found or it's private.</p></div>`;
+      }
+    }
+
+    async function fetchRepos() {
+      const localCache = localStorage.getItem('github_repos_cache');
+      if (localCache) {
+        cachedRepos = JSON.parse(localCache);
+        renderRepos(1);
+      }
+
+      try {
+        let data = null;
+        try {
+          const res = await fetch(exactApiUrl);
+          if (res.ok) data = await res.json();
+        } catch (e) {}
+
+        if (!data) {
+          const res = await fetch(`https://corsproxy.io/?url=${encodeURIComponent(exactApiUrl)}`);
+          if (res.ok) data = await res.json();
+        }
+        if (!data) {
+          const res = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(exactApiUrl)}`);
+          if (res.ok) data = await res.json();
+        }
+
+        if (data && data.length > 0) {
+          cachedRepos = data;
+          localStorage.setItem('github_repos_cache', JSON.stringify(cachedRepos));
+          renderRepos(1);
+        } else if (!localCache) {
+          reposContainer.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500">No Public Repositories Found</div>`;
+        }
+      } catch (error) {
+        if (!localCache) {
+          reposContainer.innerHTML = `<div class="col-span-full text-center py-12 text-red-500"><p class="font-semibold mb-1">Error</p><p class="text-sm">Could not load GitHub data. Check your network.</p></div>`;
+        }
+      }
+    }
+
+    function renderRepos(page) {
+      currentPage = page;
+      const start = (page - 1) * perPage;
+      const end = start + perPage;
+      const pageRepos = cachedRepos.slice(start, end);
+      
+      reposContainer.innerHTML = '';
+      
+      for (let i = 0; i < pageRepos.length; i++) {
+        const repo = pageRepos[i];
+        const card = document.createElement('div');
+        card.className = `tilt-card p-4 sm:p-6 rounded-2xl fancy-border flex flex-col group cursor-pointer bg-white dark:bg-cardbg`;
+        
+        card.innerHTML = `
+          <div class="tilt-inner flex flex-col h-full">
+            <div class="flex items-center justify-between mb-4">
+              <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-lightborder dark:border-slate-700 text-slate-500 dark:text-slate-400">
+                <i class="fa-brands fa-github text-xl"></i>
+              </div>
+              <span class="text-[10px] font-bold text-slate-500 border border-lightborder dark:border-slate-700 px-2 py-0.5 rounded-full uppercase tracking-wider">${repo.language || 'Code'}</span>
+            </div>
+            <h4 class="font-heading text-base sm:text-lg font-bold mb-2 text-slate-900 dark:text-white group-hover:text-primary transition-colors truncate">${repo.name}</h4>
+            <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mb-6 flex-grow line-clamp-2">${repo.description || 'No description provided.'}</p>
+            <div class="flex items-center justify-between text-xs text-slate-500 mt-auto pt-4 border-t border-lightborder dark:border-slate-800/40">
+              <span class="flex items-center gap-1">
+                <i class="fa-solid fa-star"></i>
+                ${repo.stargazers_count}
+              </span>
+              <div class="flex items-center gap-2">
+                <button onclick="loadReadme('${repo.name}')" class="text-xs font-semibold text-primary hover:text-white border border-primary/30 hover:bg-primary px-3 py-1.5 rounded-lg transition-all">README</button>
+                <a href="${repo.html_url}" target="_blank" class="text-xs font-semibold flex items-center gap-1 hover:text-primary transition-colors py-1.5">
+                  Repo 
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = `opacity 0.5s ease-out, transform 0.5s ease-out`;
+        card.style.transitionDelay = `${i * 0.1}s`;
+        
+        reposContainer.appendChild(card);
+
+        requestAnimationFrame(() => {
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        });
+
+        setTimeout(() => {
+          card.style.transition = '';
+          card.style.transitionDelay = '';
+        }, 600 + (i * 100));
+      }
+
+      attachTiltEvents();
+      renderPagination();
+    }
+
+    function renderPagination() {
+      paginationContainer.innerHTML = '';
+      const totalPages = Math.ceil(cachedRepos.length / perPage);
+      if (totalPages <= 1) return;
+
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.className = `w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl border transition-all font-semibold text-xs sm:text-sm ${i === currentPage ? 'bg-primary text-white border-primary' : 'bg-white dark:bg-slate-800 border-lightborder dark:border-slate-700 hover:border-primary text-slate-700 dark:text-slate-300'}`;
+        btn.textContent = i;
+        btn.addEventListener('click', () => renderRepos(i));
+        paginationContainer.appendChild(btn);
+      }
+    }
+
+    fetchRepos();
+  </script>
+</body>
+</html>
